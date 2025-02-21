@@ -1,0 +1,24 @@
+---
+
+- name: Download CLI configuration.
+  connection: httpapi
+  fortinet.fortiweb.fwebos_backup_download:
+    action: get
+    type: cli
+    filename: "{{ __tmp_dir }}/{{ inventory_hostname }}.zip"
+
+# - name: Unzip the files.
+#   ansible.builtin.unarchive:
+#     src: "/tmp/{{ inventory_hostname }}.zip"
+#     dest: "/tmp/{{ inventory_hostname }}"
+#     remote_src: false
+#   delegate_to: "{{ fortiweb_backup_bastion }}"
+
+- name: Zip all the files.
+  connection: local
+  community.general.archive:
+    path: "{{ __tmp_dir }}/*.zip"
+    dest: "{{ __tmp_dir }}/{{ __timestamp }}{{ fortiweb_backup_files_suffix }}.zip"
+    mode: "755"
+    format: zip
+  run_once: true

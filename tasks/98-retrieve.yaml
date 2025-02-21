@@ -1,0 +1,34 @@
+---
+
+- name: Send the backup files by email.
+  connection: local
+  vars:
+    mail: "{{ fortiweb_backup_files_retrieval.email }}"
+  community.general.mail:
+    host: "{{ mail.host }}"
+    port: "{{ mail.port }}"
+    username: "{{ mail.username | default(omit) }}"
+    password: "{{ mail.password | default(omit) }}"
+    secure: "{{ mail.secure | default(omit) }}"
+    from: "{{ mail.from }}"
+    subject: "{{ mail.subject }}"
+    to: "{{ mail.to }}"
+    body: "{{ lookup('ansible.builtin.template', 'mail.j2') }}"
+    attach: "{{ __tmp_dir }}/{{ __timestamp }}{{ fortiweb_backup_files_suffix }}.zip"
+  when: mail.enabled
+  run_once: true
+
+- name: Send files by SFTP.
+  become: true
+  connection: local
+  vars:
+    sftp: "{{ fortiweb_backup_files_retrieval.sftp }}"
+  ansible.builtin.copy:
+    src: "{{ __tmp_dir }}/{{ __timestamp }}{{ fortiweb_backup_files_suffix }}.zip"
+    dest: "{{ sftp.remote_path }}/{{ __timestamp }}{{ fortiweb_backup_files_suffix }}.zip"
+    owner: "{{ sftp.remote_user }}"
+    group: "{{ sftp.remote_user }}"
+    mode: "775"
+  when: sftp.enabled
+  delegate_to: "{{ sftp.remote_host }}"
+  run_once: true

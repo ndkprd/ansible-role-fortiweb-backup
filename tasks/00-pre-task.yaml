@@ -1,0 +1,13 @@
+---
+
+# - name: Get timestamp from control node.
+#   connection: local
+#   ansible.builtin.set_fact:
+#     timestamp: "{{ lookup('ansible.builtin.pipe', 'date +%Y%m%d') }}"
+
+- name: Make sure backup dir exist.
+  connection: local
+  ansible.builtin.file:
+    path: "{{ __tmp_dir }}"
+    state: directory
+    mode: "777"

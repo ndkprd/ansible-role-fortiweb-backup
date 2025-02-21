@@ -1,0 +1,8 @@
+---
+
+- name: Clean up tmp files.
+  connection: local
+  ansible.builtin.file:
+    path: "{{ __tmp_dir }}"
+    state: absent
+  run_once: true

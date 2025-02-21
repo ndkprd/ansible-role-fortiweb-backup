@@ -1,0 +1,13 @@
+---
+
+- name: Run pre-tasks.
+  ansible.builtin.import_tasks: 00-pre-task.yaml
+
+- name: Run backup tasks.
+  ansible.builtin.import_tasks: 01-backup.yaml
+
+- name: Run retrieval tasks.
+  ansible.builtin.import_tasks: 98-retrieve.yaml
+
+- name: Run post-tasks.
+  ansible.builtin.import_tasks: 99-post-task.yaml
