@@ -14,7 +14,7 @@
     subject: "{{ mail.subject }}"
     to: "{{ mail.to }}"
     body: "{{ lookup('ansible.builtin.template', 'mail.j2') }}"
-    attach: "{{ __tmp_dir }}/{{ __timestamp }}{{ fortiweb_backup_files_suffix }}.zip"
+    attach: "{{ fortiweb_backup_tmp_dir }}/{{ fortiweb_backup_timestamp }}{{ fortiweb_backup_files_suffix }}.zip"
   when: mail.enabled
   run_once: true
 
@@ -24,8 +24,8 @@
   vars:
     sftp: "{{ fortiweb_backup_files_retrieval.sftp }}"
   ansible.builtin.copy:
-    src: "{{ __tmp_dir }}/{{ __timestamp }}{{ fortiweb_backup_files_suffix }}.zip"
-    dest: "{{ sftp.remote_path }}/{{ __timestamp }}{{ fortiweb_backup_files_suffix }}.zip"
+    src: "{{ fortiweb_backup_tmp_dir }}/{{ fortiweb_backup_timestamp }}{{ fortiweb_backup_files_suffix }}.zip"
+    dest: "{{ sftp.remote_path }}/{{ fortiweb_backup_timestamp }}{{ fortiweb_backup_files_suffix }}.zip"
     owner: "{{ sftp.remote_user }}"
     group: "{{ sftp.remote_user }}"
     mode: "775"

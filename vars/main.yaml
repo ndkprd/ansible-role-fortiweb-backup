@@ -1,4 +1,4 @@
 ---
 
-__timestamp: "{{ lookup('ansible.builtin.pipe', 'date +%Y%m%d') }}"
-__tmp_dir: "/tmp/fortiweb_backup"
+fortiweb_backup_timestamp: "{{ lookup('ansible.builtin.pipe', 'date +%Y%m%d') }}"
+fortiweb_backup_tmp_dir: "/tmp/fortiweb_backup"
