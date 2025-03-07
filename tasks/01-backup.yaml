@@ -1,7 +1,7 @@
 ---
 
 - name: Download CLI configuration.
-  connection: httpapi
+  # connection: httpapi
   fortinet.fortiweb.fwebos_backup_download:
     action: get
     type: cli
