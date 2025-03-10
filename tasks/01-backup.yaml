@@ -1,6 +1,6 @@
 ---
 
-- name: Download CLI configuration.
+- name: Download CLI configuration (v1).
   connection: httpapi
   delegate_to: "{{ inventory_hostname }}"
   fortinet.fortiweb.fwebos_backup_download:
