@@ -2,6 +2,7 @@
 
 - name: Download CLI configuration.
   connection: httpapi
+  delegate_to: "{{ inventory_hostname }}"
   fortinet.fortiweb.fwebos_backup_download:
     action: get
     type: cli
