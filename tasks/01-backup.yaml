@@ -1,11 +1,22 @@
 ---
 
-- name: Download CLI configuration (v1).
-  connection: ansible.netcommon.httpapi
-  fortinet.fortiweb.fwebos_backup_download:
-    action: get
-    type: cli
-    filename: "{{ fortiweb_backup_tmp_dir }}/{{ inventory_hostname }}.zip"
+# - name: Download CLI configuration (v1).
+#   connection: ansible.netcommon.httpapi
+#   fortinet.fortiweb.fwebos_backup_download:
+#     action: get
+#     type: cli
+#     filename: "{{ fortiweb_backup_tmp_dir }}/{{ inventory_hostname }}.zip"
+
+- name: Download CLI config.
+  connection: local
+  ansible.builtin.get_url:
+    url: "{{ fortiweb_backup_api_url }}"
+    dest: "{{ fortiweb_backup_tmp_dir }}/{{ inventory_hostname }}.zip"
+    headers:
+      "Authorization": "{{ fortiweb_authentication_token }}"
+    mode: "755"
+    validate_certs: false
+  register: fortiweb_backup_get_result
 
 - name: Zip all the files.
   connection: local

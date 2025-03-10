@@ -1,4 +1,5 @@
 ---
 
+fortiweb_backup_api_url: "https://{{ ansible_host }}/api/v2.0/system/maintenance.backupconfiguration?ml_backup=false&type=cli"
 fortiweb_backup_timestamp: "{{ lookup('ansible.builtin.pipe', 'date +%Y%m%d') }}"
 fortiweb_backup_tmp_dir: "/tmp/fortiweb_backup"
